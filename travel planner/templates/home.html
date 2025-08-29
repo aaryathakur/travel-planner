@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Travel Planner</title></head>
+<body>
+  <h1>Virtual Travel Planner</h1>
+  <p><a href="{{ url_for('plan') }}">Plan a trip (source → destination)</a></p>
+  {% if session.username %}
+    <p>Logged in as {{ session.username }} | <a href="{{ url_for('dashboard') }}">Dashboard</a> | <a href="{{ url_for('logout') }}">Logout</a></p>
+  {% else %}
+    <p><a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Register</a></p>
+  {% endif %}
+</body>
+</html>

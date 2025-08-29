@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head><title>Itinerary Planner</title></head>
+<body>
+  <h2>Plan Your Itinerary</h2>
+
+  <!-- Existing itinerary form (username removed, as you use session) -->
+  <form method="POST" action="{{ url_for('itinerary') }}">
+    Destination: <input type="text" name="destination" required><br><br>
+    Start Date: <input type="date" name="start_date"><br><br>
+    End Date: <input type="date" name="end_date"><br><br>
+    Notes: <textarea name="notes"></textarea><br><br>
+    <input type="submit" value="Add Itinerary">
+  </form>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+    {% endif %}
+  {% endwith %}
+
+  {% if itineraries %}
+    <h3>Your Itineraries:</h3>
+    <ul>
+      {% for trip in itineraries %}
+        <li><strong>{{ trip[2] }}</strong> ({{ trip[3] }} to {{ trip[4] }})<br>Notes: {{ trip[5] }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <hr>
+  <!-- AI Suggestion form -->
+  <h3>AI-powered itinerary suggestion</h3>
+  <form method="POST" action="{{ url_for('suggest_itinerary') }}">
+    Destination: <input type="text" name="ai_destination" required>
+    Days: <input type="number" name="ai_days" min="1" value="3">
+    <button type="submit">Suggest with AI</button>
+  </form>
+
+  {% if ai_suggestion %}
+    <h4>AI Suggestion</h4>
+    <pre style="white-space: pre-wrap;">{{ ai_suggestion }}</pre>
+  {% endif %}
+</body>
+</html>

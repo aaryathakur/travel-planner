@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Flight Search Results</h1>
+    
+    {% if flights %}
+        <ul>
+            {% for flight in flights %}
+                <li>
+                    <strong>Carrier:</strong> {{ flight.carrier }}<br>
+                    <strong>Price:</strong> ${{ flight.price }}<br>
+                    <strong>Direct Flight:</strong> {{ flight.direct }}<br>
+                    <strong>Departure Time:</strong> {{ flight.departure_time }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No flights found for your search criteria.</p>
+    {% endif %}
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

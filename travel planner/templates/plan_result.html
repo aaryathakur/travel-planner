@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head><title>Plan Result</title></head>
+<body>
+  <h2>Plan: {{ source }} → {{ destination }}</h2>
+  <p>Distance: {{ distance_km|default('N/A') }} km</p>
+  <p>Estimated travel time: {{ duration_text }}</p>
+
+  {% if weather %}
+    <h3>Weather at destination</h3>
+    <p>Temperature: {{ weather.temp }} °C</p>
+    <p>Description: {{ weather.description }}</p>
+  {% endif %}
+
+  <h3>Hotels (sample)</h3>
+  <ul>
+    {% for h in hotels %}
+      <li>{{ h.name }} — {{ h.vicinity }} {% if h.rating %}(rating: {{ h.rating }}){% endif %}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Estimated Costs</h3>
+  <p>Travel: {{ costs.travel_cost if costs.travel_cost is not none else 'N/A' }} INR</p>
+  <p>Hotel (total): {{ costs.hotel_cost }} INR</p>
+  <p>Food & Misc: {{ costs.food_misc }} INR</p>
+  <p><strong>Estimated total: {{ costs.total_estimate }} INR</strong></p>
+
+  {% if ai_plan %}
+    <h3>AI Suggested Itinerary</h3>
+    <pre style="white-space: pre-wrap;">{{ ai_plan }}</pre>
+  {% else %}
+    <p>(AI plan not available — set OPENAI_API_KEY to enable.)</p>
+  {% endif %}
+
+  <p><a href="{{ url_for('plan') }}">Plan another</a></p>
+  <p><a href="{{ url_for('dashboard') }}">Dashboard</a></p>
+</body>
+</html>
